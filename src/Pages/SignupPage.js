@@ -2,10 +2,25 @@ import React from 'react'
 import Container from 'react-bootstrap/Container'
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
+import { useHistory } from 'react-router-dom'
 import '../Styles/styles.css'
 
 export default class SignupPage extends React.Component {
   render () {
+    function SigninPageButton () {
+      const history = useHistory()
+
+      function handleClick () {
+        history.push('/auth/signin')
+      }
+
+      return (
+        <Button variant='light' onClick={handleClick}>
+                  Do you already have an account?
+        </Button>
+      )
+    }
+
     return (
       <Container className='centeredContent'>
         <h3>Member Registration</h3>
@@ -32,9 +47,7 @@ export default class SignupPage extends React.Component {
             </Button>
           </Form.Group>
         </Form>
-        <Button variant='light' href='/auth/signin'>
-                  Do you already have an account?
-        </Button>
+        <SigninPageButton />
       </Container>
     )
   }
