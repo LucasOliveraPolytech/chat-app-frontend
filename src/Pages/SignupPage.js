@@ -4,25 +4,25 @@ import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
 import '../Styles/styles.css'
 
-export default class SingupPage extends React.Component {
+export default class SignupPage extends React.Component {
   render () {
     return (
       <Container className='centeredContent'>
         <h3>Member Registration</h3>
         <Form>
-          <Form.Group controlId='singupFormFirstName'>
+          <Form.Group controlId='signupFormFirstName'>
             <Form.Control placeholder='First name' />
           </Form.Group>
 
-          <Form.Group controlId='singupFormLastName'>
+          <Form.Group controlId='signupFormLastName'>
             <Form.Control placeholder='Last name' />
           </Form.Group>
 
-          <Form.Group controlId='singupFormUsername'>
+          <Form.Group controlId='signupFormUsername'>
             <Form.Control placeholder='Username' />
           </Form.Group>
 
-          <Form.Group controlId='singupFormPassword'>
+          <Form.Group controlId='signupFormPassword'>
             <Form.Control type='password' placeholder='Password' />
           </Form.Group>
 
@@ -32,7 +32,7 @@ export default class SingupPage extends React.Component {
             </Button>
           </Form.Group>
         </Form>
-        <Button variant='light'>
+        <Button variant='light' href='/auth/signin'>
                   Do you already have an account?
         </Button>
       </Container>
