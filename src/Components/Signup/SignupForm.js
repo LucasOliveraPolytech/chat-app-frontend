@@ -5,6 +5,7 @@ import { Alert } from 'react-bootstrap'
 import { useFormik } from 'formik'
 import gql from 'graphql-tag'
 import { useMutation } from '@apollo/react-hooks'
+import { setToken } from '../../tokenHandling'
 
 const SIGNUP_NEW_USER = gql`
   mutation signupNewUser($signupInput: SignupInput!) {
@@ -22,7 +23,10 @@ const SIGNUP_NEW_USER = gql`
 
 export default function SignupForm () {
   const [error, setError] = useState()
-  const [signup] = useMutation(SIGNUP_NEW_USER)
+  const [signup] = useMutation(
+    SIGNUP_NEW_USER, {
+      onCompleted: () => { console.log('Succesfull signup') }
+    })
   const formik = useFormik({
     initialValues: {
       firstName: '',
@@ -33,7 +37,8 @@ export default function SignupForm () {
     onSubmit: async values => {
       try {
         const signupInput = { signupInput: values }
-        await signup({ variables: signupInput })
+        const { data } = await signup({ variables: signupInput })
+        setToken(data.signup.jwt)
       } catch (error) {
         setError(error)
       }

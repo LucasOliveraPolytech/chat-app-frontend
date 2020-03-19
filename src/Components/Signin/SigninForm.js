@@ -5,6 +5,7 @@ import Alert from 'react-bootstrap/Alert'
 import { useFormik } from 'formik'
 import gql from 'graphql-tag'
 import { useMutation } from '@apollo/react-hooks'
+import { setToken } from '../../tokenHandling'
 
 const SIGNIN_USER = gql`
   mutation signinUser($signinInput: SigninInput!) {
@@ -34,9 +35,9 @@ export default function SigninForm () {
     onSubmit: async values => {
       try {
         const signinInput = { signinInput: values }
-        await signin({ variables: signinInput })
+        const { data } = await signin({ variables: signinInput })
+        setToken(data.signin.jwt)
       } catch (error) {
-        console.log(error)
         setState(error)
       }
     }
