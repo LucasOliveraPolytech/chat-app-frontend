@@ -11,6 +11,9 @@ const SIGNIN_USER = gql`
     signin(userData: $signinInput) {
       user {
         id
+        username
+        firstName
+        lastName
       }
       jwt
     }
@@ -19,7 +22,10 @@ const SIGNIN_USER = gql`
 
 export default function SigninForm () {
   const [error, setState] = useState()
-  const [signin, { data }] = useMutation(SIGNIN_USER)
+  const [signin] = useMutation(
+    SIGNIN_USER, {
+      onCompleted: () => { console.log('Succesfull login') }
+    })
   const formik = useFormik({
     initialValues: {
       username: '',
@@ -30,6 +36,7 @@ export default function SigninForm () {
         const signinInput = { signinInput: values }
         await signin({ variables: signinInput })
       } catch (error) {
+        console.log(error)
         setState(error)
       }
     }
