@@ -6,6 +6,7 @@ import { useFormik } from 'formik'
 import gql from 'graphql-tag'
 import { useMutation } from '@apollo/react-hooks'
 import { setToken } from '../../tokenHandling'
+import { useHistory } from 'react-router-dom'
 
 const SIGNIN_USER = gql`
   mutation signinUser($signinInput: SigninInput!) {
@@ -22,10 +23,13 @@ const SIGNIN_USER = gql`
 `
 
 export default function SigninForm () {
+  const history = useHistory()
   const [error, setState] = useState()
   const [signin] = useMutation(
     SIGNIN_USER, {
-      onCompleted: () => { console.log('Succesfull login') }
+      onCompleted: () => {
+        console.log('Succesfull login')
+      }
     })
   const formik = useFormik({
     initialValues: {
@@ -37,6 +41,7 @@ export default function SigninForm () {
         const signinInput = { signinInput: values }
         const { data } = await signin({ variables: signinInput })
         setToken(data.signin.jwt)
+        history.push('/greetings')
       } catch (error) {
         setState(error)
       }
