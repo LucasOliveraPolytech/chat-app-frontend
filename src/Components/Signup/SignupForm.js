@@ -6,6 +6,7 @@ import { useFormik } from 'formik'
 import gql from 'graphql-tag'
 import { useMutation } from '@apollo/react-hooks'
 import { setToken } from '../../tokenHandling'
+import { useHistory } from 'react-router-dom'
 
 const SIGNUP_NEW_USER = gql`
   mutation signupNewUser($signupInput: SignupInput!) {
@@ -22,6 +23,7 @@ const SIGNUP_NEW_USER = gql`
 `
 
 export default function SignupForm () {
+  const history = useHistory()
   const [error, setError] = useState()
   const [signup] = useMutation(
     SIGNUP_NEW_USER, {
@@ -39,6 +41,7 @@ export default function SignupForm () {
         const signupInput = { signupInput: values }
         const { data } = await signup({ variables: signupInput })
         setToken(data.signup.jwt)
+        history.push('/greetings')
       } catch (error) {
         setError(error)
       }
