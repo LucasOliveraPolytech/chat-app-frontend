@@ -11,6 +11,9 @@ const SIGNUP_NEW_USER = gql`
     signup(userData: $signupInput) {
       user {
         id
+        username
+        firstName
+        lastName
       }
       jwt
     }
@@ -19,7 +22,7 @@ const SIGNUP_NEW_USER = gql`
 
 export default function SignupForm () {
   const [error, setError] = useState()
-  const [signup, { data }] = useMutation(SIGNUP_NEW_USER)
+  const [signup] = useMutation(SIGNUP_NEW_USER)
   const formik = useFormik({
     initialValues: {
       firstName: '',
